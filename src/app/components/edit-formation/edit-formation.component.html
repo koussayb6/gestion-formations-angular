@@ -1,0 +1,45 @@
+
+<script src="../list-formation/list-formation.component.ts"></script>
+<div class="modal-body">
+  <form #f="ngForm" id="addCourse">
+
+    <div class="form-group">
+
+      Title<input type="text" class="form-control" id="title"  name="title" ngModel [(ngModel)]="formation.title" required #title ="ngModel">
+      Duree<input type="text" class="form-control" id="duree"  name="duree" ngModel [(ngModel)]="formation.duree" required #duree="ngModel">
+     nb_session <input type="text" class="form-control" id="nb_session"  name="nb_session" ngModel [(ngModel)]="formation.nb_session" required #nb="ngModel">
+      Budget<input type="text" class="form-control" id="budget"  name="budget" ngModel [(ngModel)]="formation.budget" required #budget="ngModel">
+
+
+
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="title.invalid && title.touched" >
+        <span *ngIf="title.errors?.required">This field is required!</span>
+      </div>
+    </div>
+
+  </form>
+
+  <div class="form-group">
+    <label for="domaine">Domaine</label>
+    <select name="domaine" [ngModel]="domaine" id="domaine" class="form-control" (ngModelChange)="setDomaine($event)"
+            required #domaine="ngModel"
+            [ngClass]="{'is-invalid': domaine.invalid&&domaine.touched,'is-valid': domaine.valid&&domaine.touched}">
+      <option *ngFor="let domaine of domaines"  [ngValue]="domaine" [attr.selected]="domaine.idDomaine == formation?.domaine?.idDomaine ? true : null">
+        {{domaine.libelle}}</option>
+    </select>
+
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="domaine.invalid && domaine.touched" >
+      <span *ngIf="domaine.errors?.required">Domaine is required!</span>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  <input type="submit" value="save" class="btn btn-primary" form="addCourse" (click)="sendDataToParent(f.value)">
+</div>

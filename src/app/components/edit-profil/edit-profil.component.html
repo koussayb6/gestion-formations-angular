@@ -1,0 +1,21 @@
+
+<div class="modal-body">
+  <form #f="ngForm" id="addStock">
+
+    <div class="form-group">
+      <label for="libelle">Libelle profil</label>
+      <input type="text" class="form-control" id="libelle"  name="libelle" ngModel [(ngModel)]="profil.libelle" required #libelle="ngModel">
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="libelle.invalid && libelle.touched" >
+        <span *ngIf="libelle.errors?.required">This field is required!</span>
+      </div>
+    </div>
+
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  <input type="submit" value="save" class="btn btn-primary" form="addStock" (click)="sendDataToParent(f.value)">
+</div>

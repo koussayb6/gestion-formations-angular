@@ -1,0 +1,105 @@
+
+<div class="modal-body">
+  <form #f="ngForm" id="addStock">
+
+
+    <div class="form-group">
+      <label for="lieu">Lieu</label>
+      <input type="text" class="form-control" id="lieu"  name="lieu" ngModel [(ngModel)]="courseSession.lieu" required #lieu="ngModel">
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="lieu.invalid && lieu.touched" >
+        <span *ngIf="lieu.errors?.required">This field is required!</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="date_debut">Date de début</label>
+      <input type="text" class="form-control" id="date_debut" placeholder="yyyy-mm-dd"  name="date_debut" ngModel [(ngModel)]="courseSession.date_debut" required #date_debut="ngModel">
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="date_debut.invalid && date_debut.touched" >
+        <span *ngIf="date_debut.errors?.required">This field is required!</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="date_fin">Date de fin</label>
+      <input type="text" class="form-control" id="date_fin" placeholder="yyyy-mm-dd"  name="date_fin" ngModel [(ngModel)]="courseSession.date_fin" required #date_fin="ngModel">
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="date_fin.invalid && date_fin.touched" >
+        <span *ngIf="date_fin.errors?.required">This field is required!</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="nb_participant">Number of participants</label>
+      <input type="number" class="form-control" id="nb_participant"  name="nb_participant" ngModel [(ngModel)]="courseSession.nb_participant" min="1" required #nb_participant="ngModel">
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="nb_participant.invalid && nb_participant.touched" >
+        <span *ngIf="nb_participant.errors?.required">This field is required!</span>
+        <span *ngIf="nb_participant.errors?.min">Minimum number of participants is 1!</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="structure">Structure</label>
+      <select name="structure" [ngModel]="structure" id="structure" class="form-control" (ngModelChange)="setStructure($event)"
+              required #structure="ngModel"
+              [ngClass]="{'is-invalid': structure.invalid&&structure.touched,'is-valid': structure.valid&&structure.touched}">
+        <option *ngFor="let structure of structures"  [ngValue]="structure" [attr.selected]="structure?.idStructure == courseSession?.structure?.idStructure ? true : null">
+          {{structure.libelle}}</option>
+      </select>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="course.invalid && course.touched" >
+        <span *ngIf="course.errors?.required">This field is required!</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="trainer">Trainer</label>
+      <select name="trainer" [ngModel]="trainer" id="trainer" class="form-control" (ngModelChange)="setTrainer($event)"
+              required #trainer="ngModel"
+              [ngClass]="{'is-invalid': trainer.invalid&&trainer.touched,'is-valid': trainer.valid&&trainer.touched}">
+        <option *ngFor="let trainer of trainers"  [ngValue]="trainer" [attr.selected]="trainer?.idTrainer == courseSession?.trainer?.idTrainer ? true : null">
+          {{trainer.firstname}} {{trainer.lastname}}</option>
+      </select>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="trainer.invalid && trainer.touched" >
+        <span *ngIf="trainer.errors?.required">This field is required!</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="course">Course</label>
+      <select name="course" [ngModel]="course" id="course" class="form-control" (ngModelChange)="setCourse($event)"
+              required #course="ngModel"
+              [ngClass]="{'is-invalid': course.invalid&&course.touched,'is-valid': course.valid&&course.touched}">
+        <option *ngFor="let course of courses"  [ngValue]="course" [attr.selected]="course?.idCourse == courseSession?.course?.idCourse ? true : null">
+          {{course.title}}</option>
+      </select>
+      <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="course.invalid && course.touched" >
+        <span *ngIf="course.errors?.required">This field is required!</span>
+      </div>
+    </div>
+
+
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  <input type="submit" value="save" class="btn btn-primary" form="addStock" (click)="sendDataToParent(f.value)">
+</div>

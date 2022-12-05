@@ -1,0 +1,95 @@
+<!-- table list domaineService -->
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header pb-0">
+          <h6>Users list</h6>
+          <input type="submit" value="Add User" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf="loggedIn">
+
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+
+          <div class="table-responsive p-0">
+
+            <table class="table align-items-center mb-0">
+
+              <thead>
+              <tr>
+
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Actions</th>
+                <th class="text-secondary opacity-7"></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let user of users; let i=index">
+                <td>
+                  <div class="d-flex px-2 py-1">
+                    <div>
+                      <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                    </div>
+                    <div class="d-flex flex-column justify-content-center">
+                      <p class="text-xs text-secondary mb-0">{{user.username}}</p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                <div class="d-flex flex-column justify-content-center">
+                  <p class="text-xs text-secondary mb-0">{{user.email}}</p>
+                </div>
+                </td>
+
+
+
+                <td *ngIf="loggedIn"  class="align-middle">    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="update(user,i)"><i class="fa fa-edit"></i></button>
+                  <button (click)="delete(user.id)" class="btn btn-warning mx-2" ><i class="fa fa-trash"></i></button>
+                </td>
+              </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer pt-3  ">
+    <div class="container-fluid">
+      <div class="row align-items-center justify-content-lg-between">
+        <div class="col-lg-6 mb-lg-0 mb-4">
+          <div class="copyright text-center text-sm text-muted text-lg-start">
+            © <script>
+            document.write(new Date().getFullYear())
+          </script>,
+            made with <i class="fa fa-heart"></i> by
+            <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
+            for a better web.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- Breadcrumbs Section End -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">User form</h5>
+        <button type="button" id="close" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <app-edit-user *ngIf="showEdit; else elseblock" [user]="user" (notif)="updateUser($event)"></app-edit-user>
+      <ng-template #elseblock>
+        <app-edit-user  (notif)="addUser($event)"></app-edit-user>
+      </ng-template>
+    </div>
+  </div>
+</div>
